@@ -43,8 +43,8 @@ class BossInfo extends Component{
                 <InputItem onChange={v=>this.onChange('title',v)}>招聘职位</InputItem>
                 <InputItem onChange={v=>this.onChange('company',v)}>公司名称</InputItem>
                 <InputItem onChange={v=>this.onChange('money',v)}>职位薪资</InputItem>
-                 <TextareaItem title="职位要求" rows={3} autoHeight onChange={v=>this.onChange('desc',v)}/>
-                 <Button type='primary' onClick={()=>{this.props.update(this.state)}}>保存</Button>
+                <TextareaItem title="职位要求" rows={3} autoHeight onChange={v=>this.onChange('desc',v)}/>
+                <Button type='primary' onClick={()=>{this.props.update(this.state)}}>保存</Button>
             </div>
         )
     }

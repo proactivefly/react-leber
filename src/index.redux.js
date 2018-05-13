@@ -1,7 +1,7 @@
 const ADD_GUN = '加机关枪'
 const REMOVE_GUN = '减机关枪'
 
-//reducer
+//reducer  
 export function counter(state = 0 , action){
     switch(action.type){
         case ADD_GUN:
@@ -26,7 +26,7 @@ export function addGun(){
 export function removeGun(){
     return {type:REMOVE_GUN}
 }
-
+//异步操作state
 export function addGunAnsyc(){
     return dispatch=>{
         setTimeout(() => {
