@@ -1,3 +1,4 @@
+/*入口文件*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -8,8 +9,8 @@ import './index.css';
 import {createStore,applyMiddleware,compose} from 'redux';
 
 import thunk from 'redux-thunk'   //专用于处理redux异步 插件，（川课） 
-
-import combineReducers from './reducer' // 引入合并后的reduce
+/*引入合并后的reduce*/
+import combineReducers from './reducer' 
 
 /**
  * 连接组件 react和redux的组件责传入store 也不需要subscribe订阅了
@@ -18,21 +19,16 @@ import {Provider} from 'react-redux'
 
 import registerServiceWorker from './registerServiceWorker';
 
-import './config'
+import './config' //axios全局配置
 
 /**
  * 引入reduct-router
  * BrowserRouter 组件内只能一个根元素
  * Router渲染对应组件
  * Redirect 组件跳转
- * Switch 根据条件只渲染一个组件
+ * Switch 根据条件只渲染  【匹配的】第一个一个组件
  */
 import { BrowserRouter,Route,Redirect,Switch} from 'react-router-dom'
-
-
-//分为登录页和主页  做权限校验
-//import Auth from './Auth.js'
-//import Dashbord from './Dashbord'
 
 
 /**
@@ -72,6 +68,10 @@ registerServiceWorker();
 
 
 
+//分为登录页和主页  做权限校验
+//import Auth from './Auth.js'
+//import Dashbord from './Dashbord'
+
 
 
 /**
@@ -84,9 +84,6 @@ registerServiceWorker();
 /**
  * 引入react -redux 时写法
  */
-
-//import {counter} from './index.redux.js'
-
 
 
 /*
@@ -117,8 +114,8 @@ registerServiceWorker();
                 <div>
                     <Switch>
                         <Route exact path='/Auth' component={Auth}></Route>
-                        <Route path='/Dashbord' component={Dashbord}></Route>                   
-                        <Redirect to='/Dashbord'></Redirect>
+                        <Route path='/Dashbord' component={Dashbord}></Route>                 
+                        <Redirect to='/Dashbord'></Redirect> //如果都没匹配到,重定向到dashbord
                     </Switch>
                 </div>
               </BrowserRouter>

@@ -4,35 +4,36 @@ import {List,InputItem,WingBlank,WhiteSpace,Button} from 'antd-mobile'
 import {login} from '../../redux/user.redux.js'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
+
 @connect(
     state => state.user,
     {login}
 )
 
-//高阶组件概念
-// 1.组件就是一个函数
-// 2.函数可以当一个参数传入到另一个函数里
+/*高阶组件概念
+1.组件就是一个函数
+2.函数可以当一个参数传入到另一个函数里
 
-// @WrapHello //相当于 Hello = WrapHello(Hello) 重新赋值HELLO组件
-// class Hello extends Component{
-//     render(){
-//         return <h2>hello world</h2>
-//     }
-// }
+@WrapHello //相当于 Hello = WrapHello(Hello) 重新赋值HELLO组件
+class Hello extends Component{
+    render(){
+        return <h2>hello world</h2>
+    }
+}
 
-// function WrapHello(Comp){
-//     return class WrapComp extends React.Component{
-//         render(){
-//             return (
-//                 <div>
-//                     <h2>这是高阶组件特有的元素</h2>
-//                     <Comp {...this.props}></Comp>
-//                 </div>
-//             )
-//         }
-//     }
-// }
-//Hello = WrapHello(Hello)
+function WrapHello(Comp){
+    return class WrapComp extends React.Component{
+        render(){
+            return (
+                <div>
+                    <h2>这是高阶组件特有的元素</h2>
+                    <Comp {...this.props}></Comp>
+                </div>
+            )
+        }
+    }
+}
+Hello = WrapHello(Hello)*/
 
 
 class Login extends Component{

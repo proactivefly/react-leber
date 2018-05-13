@@ -35,7 +35,7 @@ import {connect} from 'react-redux'
  * @return {[type]}       [description]
  */
 @connect(
-    state =>({num:state}),
+    state =>({num:state.counter}),
     {addGun,removeGun,addGunAnsyc}
 )
 class App extends Component {

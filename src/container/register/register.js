@@ -35,7 +35,7 @@ class Register extends Component{
         console.log(this.state) //this.state已经是注册的完整信息了
         //已经通过connect放入this.props下
 
-        console.log(this.props)
+        console.log(this.props) 
         this.props.register(this.state)
 
     }

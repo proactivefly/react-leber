@@ -1,6 +1,10 @@
 const express = require('express')
 
 const bodyParser = require('body-parser')
+/**
+ * cookieParser cookie 插件
+ * @type {[type]}
+ */
 const cookieParser = require('cookie-parser')
 
 
@@ -59,8 +63,8 @@ app.use('/',express.static(path.resolve('build')))
 
 
 //监听端口 原来是app.listen  写成server.listen socket.io就和express结合起来了
-server.listen(9093,function(){
-    console.log('node server start at port 9093')
+server.listen(9420,function(){
+    console.log('node server start at port 9420')
 })
 
 

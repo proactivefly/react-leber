@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-//路由
+import React from 'react'
 import {Route,Link,Switch,Redirect} from 'react-router-dom'
 import App from './App';
 import {connect} from 'react-redux'
 import {logout} from './Auth.redux'
-//进入这个页面 要做用户是否登录的判断，如果没登录跳转到auth.js页面
 
+//进入这个页面 要做用户是否登录的判断，如果没登录跳转到auth.js页面
 @connect(
      state=>state.auth,
     {logout} 
 )
 
-/*function Erying(){
+function Erying(){
     return <h2>二营</h2>
 }
 
 function Qibinglian(){
     return <h2>骑兵连</h2>
-}*/
-class Dashbord extends Component{
+}
+class Dashbord extends React.Component{
 
     render(){
       /**
@@ -28,7 +27,7 @@ class Dashbord extends Component{
       console.log(this.props) 
 
       const redirectToLogin = <Redirect to='/Auth'></Redirect>
-      const match = this.props.match;
+      const match = this.props.match
       const app = (
         <div>
         {this.props.isAuth?<button onClick={this.props.logout}>注销</button> : null}
@@ -45,13 +44,13 @@ class Dashbord extends Component{
             </ul>  
             <Switch>
                 <Route path='/Dashbord/' exact component={App}></Route>
-                {/*<Route path='/Dashbord/erying' component={Erying}></Route>
-                <Route path='/Dashbord/qibinglian' component={Qibinglian}></Route>*/}
+                <Route path='/Dashbord/erying' component={Erying}></Route>
+                <Route path='/Dashbord/qibinglian' component={Qibinglian}></Route>
             </Switch>
         </div>
       )
 
-
+      // 如果登陆了 返回app 否则 跳转到登录页
       return this.props.isAuth ? app : redirectToLogin
     }
 }

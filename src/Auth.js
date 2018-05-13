@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+/**
+ * 认证组件
+ */
+
+import React, { Component } from 'react'
+
 import {connect} from 'react-redux'
-// import {connect} from 'react-redux'
 // import {addGun,addGunAnsyc,removeGun} from './index.redux'
 import {login,getUserData} from './Auth.redux.js'
 import {Redirect} from 'react-router-dom'
@@ -20,19 +24,20 @@ class Auth extends Component{
             data:{}
         }
     }
-    componentWillMount(){
+    componentWillMount(){ //组件挂在之前钩子
         
-        this.props.getUserData()
+        this.props.getUserData() //获取用户信息并改变状态
+        
         console.log(this.props)
-        // axios.get('/data').then(res=>{
-        //         if(res.status == 200){
-        //             this.setState({
-        //                 data:res.data
-        //             })
-        //         }   
+        /*axios.get('/data').then(res=>{
+                if(res.status == 200){
+                    this.setState({
+                        data:res.data
+                    })
+                }   
                 
-        //         console.log('state.data ',JSON.stringify(this.state.data.user,null,2))  
-        // })
+                console.log('state.data ',JSON.stringify(this.state.data.user,null,2))  
+        })*/
     }
     render(){
         console.log('auth页面的props' + JSON.stringify(this.props))
