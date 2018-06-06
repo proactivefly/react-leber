@@ -7,21 +7,6 @@ import {addGun,addGunAnsyc,removeGun} from './index.redux'
 import {connect} from 'react-redux'
 
 
-/**
- * 常规模式
- * const mapStateProps=(state)=>{ 
- *     return { num:state } 
- * }
- *
- * const actionCreators={addGun,removeGun,addGunAnsyc}
- *
- * 
- * App = connect(mapStateoProps,actionCreators)(App)
-    connect 负责从外部获取组件所需要的参数 包括 state  一些方法都塞入props里  
-    上边就是直接this.props调用了 这里先安装 npm install babel-plugin-transform-decorators-legacy --save-dev
-    【这个东西就是装饰器 方便写@connect】
-    再在package.json 里修改plugin
- */
 
 /**
  * 装饰器模式
@@ -41,14 +26,7 @@ import {connect} from 'react-redux'
 class App extends Component {
 
     render() {
-        /*获取redux
-        const store = this.props.store;  
-        const num = store.getState()
-        const addGun = this.props.addGun; 
-        const removeGun = this.props.removeGun;
-        const addGunAnsyc = this.props.addGunAnsyc;
-        通过action改变state react-redux自动dispath了
-        */
+       
         return (
             <div>
                 <Button type="primary" size="small" onClick={this.props.addGun}>申请武器</Button>

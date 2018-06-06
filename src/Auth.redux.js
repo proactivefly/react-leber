@@ -23,7 +23,7 @@ export function auth(state = init ,action){
         case LOGOUT:
             return {...state,isAuth:false}
         case USERDATA:
-           return { //展开后重新对uesr,age赋值
+           return {   //展开后重新对uesr,age赋值
                 ...state,
                 user:action.payload.user,
                 age:action.payload.age
@@ -52,10 +52,14 @@ export function userData(data){
 //建立一个异步的action 因为数据传输是异步的 需要手动dispatch
 export function getUserData(){
     return dispatch=>{
+
+        // 请求数据并更新
         axios.get('/data').then(res=>{
             if(res.status === 200){
                 dispatch(userData(res.data))
             }   
         })
+
+        
     }
 }

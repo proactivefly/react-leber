@@ -7,7 +7,7 @@
     console.log(Object.values(obj))// ['111','222']
     console.log(Object.entries(obj))// [['name','111'],['age','222']]
 }
-
+ 
 {
     const name = 'imooc';
     const obj = {
