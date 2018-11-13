@@ -81,9 +81,7 @@ registerServiceWorker();
  * 
  */
 
-/**
- * 引入react -redux 时写法
- */
+
 
 
 /*
@@ -104,6 +102,9 @@ registerServiceWorker();
 //---------------------------------------reacr-redux 对比----------------------------------------------- 
 /**
  * 使用react-redux 方便了很多 Provider只在入口页面写一次 负责传入store 也不需要subscribe订阅了
+ */
+/**
+ * 引入react -redux 时写法
  */
 
 /*
