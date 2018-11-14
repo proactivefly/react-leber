@@ -74,31 +74,6 @@ registerServiceWorker();
 
 
 
-/**
- * 只用 redux 时写法
-  import './redux.js'
-  import {counter,addGun,removeGun,addGunAnsyc} from './index.redux.js'
- * 
- */
-
-
-
-
-/*
-  用render函数包裹一下  为了store订阅的时候 重新执行render函数
-  function render(){
-      ReactDOM.render(
-          <App store={store} addGun={addGun} addGunAnsyc={addGunAnsyc} removeGun={removeGun}/>, 
-          document.getElementById('root')
-      );
-      registerServiceWorker();
-  }
-  render()
-
-  store.subscribe(render) //每次状态发生变化重新render
-
-*/
-
 //---------------------------------------reacr-redux 对比----------------------------------------------- 
 /**
  * 使用react-redux 方便了很多 Provider只在入口页面写一次 负责传入store 也不需要subscribe订阅了
