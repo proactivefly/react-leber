@@ -7,8 +7,19 @@ import {addGun,addGunAnsyc,removeGun} from './index.redux'
 import {connect} from 'react-redux'
 
 
+// 11111111111111-不用装饰器写法
+const mapStateProps=(state)=>{
+    return{num:state}
+}
+const actionCreators={
+    addGun,
+    removeGun,
+    addGunAnsyc
+}
 
-/**
+App=connect(mapStateProps,actionCreators)(App)
+
+/**2222222222222222222
  * 装饰器模式
  * connect 里
  *  第一个参数是 你要把state里的什么属性放到props
@@ -23,6 +34,8 @@ import {connect} from 'react-redux'
     state =>({num:state.counter}),
     {addGun,removeGun,addGunAnsyc}
 )
+
+
 class App extends Component {
 
     render() {

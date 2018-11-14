@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import {createStore} from 'redux';
-
+import App from './App'
 import './redux.js'
 import {counter,addGun,removeGun,addGunAnsyc} from './index.redux.js'
 

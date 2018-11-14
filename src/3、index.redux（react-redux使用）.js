@@ -26,3 +26,11 @@ export function addGun(){
 export function removeGun(){
     return {type:REMOVE_GUN}
 }
+//异步操作state
+export function addGunAnsyc(){
+    return dispatch=>{
+        setTimeout(() => {
+            dispatch(addGun())
+        }, 2000)
+    }
+}
