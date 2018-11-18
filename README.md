@@ -1,58 +1,78 @@
-### 项目启动
-1，npm install后 先在server的文件夹 启动 nodemon server.js
+# 全职招聘-WEBAPP
 
-2.根目录 启动 npm start
+## 项目介绍
 
+  项目是一个招聘类webapp，后端使用express，mongodb完成接口开发；前端使用react全家桶及系列中间件处理数据，UI主要使用Antd-Mobile。
 
+  项目主体功能：注册->登录-完善信息->牛人与BOss列表->聊天列表->聊天->个人中心
 
-### build 打包的一些说明
+## 使用技术栈
 
-1.要改写 server.js 处理路径 `server/server.js`
-```
-const path = require('path')
+  ### 前端
 
-//打包后设置中间件 next 代表下一个中间件  path.resolve就是把相对路径变成绝对路径 ，确保不会报错
-app.use(function(req,res,next){
-    //设置白名单
-    if(req.url.startsWith('/user/') || req.url.startsWith('/static/')){
-        return next()
-    }
-    //只要不是user或者 static开头的路径 就访问build/index.hml
-    return res.sendFile(path.resolve('build/index.html'))
-})
+      creact-react-app
+      react16
+      redux
+      react-redux
+      redux-thunk
+      react-router4
+      prop-types
+      axios
+      browser-cookies
+      antd-mobile
 
-//打包build后 使express不拦截build文件夹
-app.use('/',express.static(path.resolve('build')))
-```
+  ### 后端  
 
-2.改写package.json 可以在项目根目录用npm run server启动服务
-```
- "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "server": "nodemon server/server.js"
-  },
-```
-
-3.停止server的9093端口  直接在根目录3000端口下运行 npm run server就可以启动了
- 改下路径到 http://localhost:9093/login
+      node
+      express
+      mongoose
+      utility
+      cookie-parser
+      body-parser
 
 
+## 项目目录
+
+        .
+        ├── README.md
+        ├── config               // 开发环境的配置
+        ├── public
+        │   ├── index.html       // 项目页面入口文件
+        ├── package.json         // 项目配置文件
+        ├── scripts              // npm scrips 命令配置
+        ├── server               // 后端配置
+        │   ├── server.js        // 服务启动文件
+        │   ├── model.js         // 数据库配置
+        │   ├── userRoute.js     // 接口配置    
+        ├── src
+        │   ├── static           // 公用资源
+        │   ├── components       // 所有组件
+        │   ├── container        // 所有页面
+        │   ├── redux            // redux管理
+        │   ├── http.js	         // axios配置
+        │   ├── index.js         // 入口文件
+        │   ├── util.js          // 功能函数封装
+        │   └── reducer.js       // 所有reducer合并
 
 
-### shouldComponentUpdate 
+## 运行项目
 
-因为组件的render是每次都执行的  所以用这个来判断是不是要render此组件
-```
- shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.color !== nextProps.color) {
-      return true;
-    }
-    if (this.state.count !== nextState.count) {
-      return true;
-    }
-    return false;
-  }
+  ### 环境依赖
 
-```
+      项目运行前须要安装NodeJs&MongoDB，Mongo端口为27017，express服务器端口9093，访问地址为：localhost
+
+  ### 运行项目
+      
+      首先需要使用命令行工具CD到根目录，按顺序执行如下命令
+
+      第一个窗口用于拉取依赖&启动服务器
+      npm install //拉取依赖
+      node server/server.js //启动服务
+
+      第二个窗口用于启动MongoDB
+      全局直接执行命令 Mongo
+
+      第三个窗口用于启动项目
+      npm run start
+
+

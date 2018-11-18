@@ -1,53 +1,65 @@
-const mongoose = require('mongoose')
-//Mongoose是在node.js环境下对mongodb进行便捷操作的对象模型工具
-//通过mongoose操作mongoDB,存储的是JSON,相对于mysql表的概念要容易
-//链接mongo
-//首先启动mongoDB服务 mongoDB/BIN文件夹下 输入net start MongoDB        mongo命令进入服务
-
-//注意 ： 要单独开一个CMD  启动node server.js   再回到根目录 npm start 否则页面无法proxy（package.json里配置的proxy）进来9093 的服务器
-
-
-//链接mongoDB 并使用immoc-chat这个集合
-const DB_URL='mongodb://127.0.0.1/27017/imooc-chat'
-
-mongoose.connect(DB_URL)
+const mongoose = require("mongoose");
+const DB_URL = "mongodb://localhost:27017/bft-db";
+mongoose.connect(DB_URL);//链接mongo并且使用testAPP这个数据库（集合）
+//监听mongo是否链接成功
+mongoose.connection.on("connected",function(){
+    console.log("mongodb connect success.")
+});
 
 const models = {
-    user:{
-        'user':{'type':String,'require':true},
-        'pwd':{'type':String,'require':true},
-        'type':{'type':String,'require':true},
-        //头像
-        'avatar':{'type':String},
-        //个人描述
-        'desc':{'type':String},
-        //职位名
-        'title':{'type':String},
-
-        //如果你是boss 还有公司和 薪资字段
-        'company':{'type':String},
-        'money':{'type':String}
+    //user表
+    user: {
+        "tel":{"type":Number,"require":true},//手机号
+        "password":{"type":String,"require":true},//密码
+        "username":{"type":String},//用户名
+        "type":{"type":String,"require":true},//职业类型
+        "address":{"type":String},
+        "sex":{"type":String},
+        "age":{"type":Number},
+        "avatar":{"type": String},//头像
+        "desc":{"type":String},//个人简介或者职位介绍
+        "title":{"type":String},//职位名称
+        //牛人
+        // "intentionMoney":{"type":String},//意向薪水
+        //Boss 补充信息
+        "money":{"type":String},//职位薪水
+        "company":{"type":String}//公司
     },
+    //获取验证码表
+    yzm: {
+        "tel":{"type":Number,require:true},
+        "yzm":{"type":String,require:true},
+        // "time":{"type":Number}
+    },
+    //聊天表
     chat:{
-        'chatid':{'type':String,'require':true},
-        'from':{'type':String,'require':true},
-        'to':{'type':String,'require':true},
-        'content':{'type':String,'require':true,'default':''},
-        'create_time':{'type':Number,'default':new Date().getTime()},
-        'read':{'type':Boolean,'default':false}
+        "chatId":{"type":String,"require":true},//当前聊天的id
+        "from":{"type":String,"require":true},//自身
+        "to":{"type":String,"require":true},//发送的目标
+        "content":{"type":String,"require":true,"default":""},//发送内容
+        "read":{"type":Boolean,"default":false},//是否查阅
+        "create_time":{"type":Number,"default":new Date().getTime()}//发送时间
     }
 }
 
-//循环建立models下所有的表建立模型
-//Schema是一种以文件形式存储的数据库模型骨架，不具备数据库的操作能力。
-//schema可以理解为mongoose对表结构的定义(不仅仅可以定义文档的结构和属性，还可以定义文档的实例方法、静态模型方法、复合索引等)，每个schema会映射到mongodb中的一个collection，schema不具备操作数据库的能力
-for(let m in models){
-    mongoose.model(m,new mongoose.Schema(models[m]))
+//遍历生成所有表
+for (let m in models) {
+    mongoose.model(m,new mongoose.Schema(models[m]));
 }
 
-//getModel方法读取模型
 module.exports = {
+    //获取表的方法
     getModel:function(name){
-        return mongoose.model(name)
+        return  mongoose.model(name);
     }
 }
+
+
+
+//创建一个表（数据模型），JSOn为字段
+// const User = mongoose.model("user",new mongoose.Schema({
+//     name:{type:String,require:true},
+//     age:{type:Number,require:true},
+//     sex:{type:String,require:true},
+//     work:{type:String,require:true}
+// }));

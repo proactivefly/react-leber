@@ -1,54 +1,163 @@
-import React, { Component } from 'react';
-import { NavBar,InputItem, TextareaItem,Button } from 'antd-mobile';
-import AvatarSelector from '../../component/avatar-selector/avatar-selector'
-import {connect} from 'react-redux'
-import {update} from '../../redux/user.redux.js'
-import {Redirect} from 'react-router-dom'
-@connect(
-    state => state.user,
-    {update}
-)
+import React,{Component} from "react";
+import {connect} from "react-redux";
+import { NavBar,InputItem,TextareaItem,Button,WingBlank,WhiteSpace,Picker,List,Toast,Icon } from "antd-mobile";
+import ChooseHeadImage from "../../components/choose-head-image/choose-head-image";
+import {updateInfo} from "../../redux/user.redux";
 
-class BossInfo extends Component{
-    constructor(){
-        super()
+const seasons = [
+    {
+        label: '男',
+        value: '男',
+    },
+    {
+        label: '女',
+        value: '女',
+    },
+];
+
+@connect(state=>state.user,{
+    updateInfo
+})
+export default class BossInfo extends Component{
+    constructor(props){
+        super(props)
         this.state = {
-            title:'',
-            avatar:'',
-            desc:'',
-            company:'',
-            money:''
+            sex:["男"],
+            username:"",
+            age:"",
+            avatar:"",
+            company:"",
+            title:"",
+            money:"",
+            desc:"",
+            type:"BOSS"
         }
     }
-    onChange(key,value){
+
+    changeHandle(key,v){
         this.setState({
-            [key]:value
+            ...this.state,
+            [key]: v
         })
     }
-    selectAvatar(imgName){
+
+    componentWillMount(){
         this.setState({
-            avatar:imgName
+            sex:[this.props.sex]||["男"],
+            username:this.props.username,
+            age:this.props.age,
+            avatar:this.props.avatar,
+            company:this.props.company,
+            title:this.props.title,
+            money:this.props.money,
+            desc:this.props.desc,
+            type:"BOSS"
         })
     }
+
+    saveHandle(){
+        const info = Object.values(this.state);
+        for(let i =0;i<info.length;i++){
+            if(!info[i]){
+                Toast.fail("信息不完整")
+                return false;
+            }
+        }
+
+        this.props.updateInfo(this.state,()=>{
+            this.props.history.push("/boss")
+        });
+    }
+
     render(){
-        const path = this.props.location.pathname;
-            const redirect = this.props.redirectTo
+       
         return (
-            //防止当前是bossinfo了 还跳转到bossinfo报错
-            
-            <div>
-                {redirect&&redirect!==path?<Redirect to={this.props.redirectTo} /> : null}
-                <NavBar mode="dark">Boss完善信息页面</NavBar>
-                <AvatarSelector selectAvatar = {this.selectAvatar.bind(this)}></AvatarSelector>
-                <InputItem onChange={v=>this.onChange('title',v)}>招聘职位</InputItem>
-                <InputItem onChange={v=>this.onChange('company',v)}>公司名称</InputItem>
-                <InputItem onChange={v=>this.onChange('money',v)}>职位薪资</InputItem>
-                <TextareaItem title="职位要求" rows={3} autoHeight onChange={v=>this.onChange('desc',v)}/>
-                <Button type='primary' onClick={()=>{this.props.update(this.state)}}>保存</Button>
+            <div className="Info mt-45">
+                {
+                    this.props.username?(
+                        <NavBar 
+                            mode="dark"
+                            icon={<Icon type="left"/>}
+                            onLeftClick={() => this.props.history.push("/user")}
+                        >编辑信息</NavBar>
+                    ):(
+                        <NavBar 
+                            mode="dark"
+                        >完善信息</NavBar>
+                    )
+                }
+                
+                <ChooseHeadImage 
+                    clickHandle={t=>{
+                        this.setState({
+                            ...this.state,
+                            avatar: t.icon
+                        })
+                    }}
+                    icon_path={this.state.avatar}
+                ></ChooseHeadImage>
+                <WhiteSpace/>
+                <List style={{ backgroundColor: 'white' }} className="picker-list">
+                    <InputItem 
+                        type="text" 
+                        placeholder="请输入您的姓名" 
+                        className="ta-right"
+                        onChange={v => this.changeHandle("username",v)}
+                        value={this.state.username}
+                    >姓名</InputItem>
+                    <InputItem 
+                        type="number" 
+                        placeholder="请输入您的年龄" 
+                        className="ta-right"
+                        onChange={v => this.changeHandle("age",v)}
+                        value={this.state.age}
+                    >年龄</InputItem>
+                    <Picker
+                        title="选择性别"
+                        extra="请选择"
+                        cols={1}
+                        data={seasons}
+                        value={this.state.sex}
+                        onChange={v => this.changeHandle("sex",v)}
+                    >
+                        <List.Item arrow="horizontal">性别</List.Item>
+                    </Picker>
+                    <InputItem 
+                        type="text" 
+                        placeholder="请输入公司名称" 
+                        className="ta-right"
+                        onChange={v => this.changeHandle("company",v)}
+                        value={this.state.company}
+                    >公司名称</InputItem>
+                    <InputItem 
+                        type="text" 
+                        placeholder="请输入招聘职位"
+                        onChange={v => this.changeHandle("title",v)}
+                        value={this.state.title}
+                    >招聘职位</InputItem>
+                    <InputItem 
+                        type="text" 
+                        placeholder="请输入职位薪资"
+                        onChange={v => this.changeHandle("money",v)}
+                        value={this.state.money}
+                    >职位薪资</InputItem>
+                    <TextareaItem
+                        title="职位简介" 
+                        placeholder="请输入职位简介"
+                        rows={5} 
+                        autoHeight
+                        onChange={v => this.changeHandle("desc",v)}
+                        value={this.state.desc}
+                    ></TextareaItem>
+                </List>
+                <WhiteSpace/>
+                <WhiteSpace/>
+                <WingBlank>
+                    <Button type="primary" onClick={this.saveHandle.bind(this)}>保存信息</Button>
+                </WingBlank>
+                <WhiteSpace/>
+                <WhiteSpace/>
             </div>
         )
     }
 }
-
-
-export default BossInfo
