@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { info } from "../../redux/user.redux";
 
-@withRouter
+@withRouter //不是路由组件，为了在this.props里看到路由信息
 @connect(null,{
     info
 })

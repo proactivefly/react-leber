@@ -39,7 +39,8 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
-                <AuthRoute></AuthRoute>{/* 登录验证组件 */}
+                {/* 登录验证组件 */}
+                <AuthRoute></AuthRoute>
                 <Switch>
                     <Route path="/geniusInfo" component={GeniusInfo}/>
                     <Route path="/bossinfo" component={BossInfo}/>
