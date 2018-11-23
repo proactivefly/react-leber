@@ -1,47 +1,44 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const userRoute = require("./userRoute");
-const app = express();
+const express = require('express');
+const userRouter = require('./user');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const model  = require('./model')
+const Chat = model.getModel('chat')
+const app = express()
 
-//express & socket.io关联
-const server = require("http").Server(app);
-const io = require("socket.io")(server);
-const models = require("./model");
-const Chat = models.getModel("chat");//聊天表
+// express和socket关联
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
-io.on("connection",function(socket){
-    //收到前端发送过来的消息
-    socket.on("sendMsg",function(data){
-        const {from,to,content} = data;
-        const chatId = [from,to].sort().join("_");
-        Chat.create({chatId,...data},function(err,doc){
-            if(doc){
-                io.emit("noticeMsg",doc)
-            }
-        })
-        //发送到全局
-        // io.emit("noticeMsg",data)
+// io是全局的请求，socket是当前这次连接的请求
+io.on('connection',(socket)=>{
+    console.log('user login')
+    //监听客户端的sendmsg事件，处理传递过来的参数
+    socket.on('sendmsg',(data)=>{
+        console.log(data)
+        // 把data广播到全局
+        // io.emit('recvmsg',data)
+
+        const {from, to, msg} = data
+		const chatid = [from,to].sort().join('_')
+		Chat.create({chatid,from,to,content:msg},function(err,doc){
+			io.emit('recvmsg', Object.assign({},doc._doc))
+		})
+		// console.log(data)
+		// io.emit('recvmsg',data)
     })
 })
 
-app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(cookieParser())
 
-// 用户接口模块
-app.use("/user",userRoute);
-
-// app.get("/",function(req,res){
-//     res.send("wellcom to express!")
-// });
-
-server.listen("9093",function(){
-    console.log("open Browser http://localhost:9093");
-});
+app.use('/user',userRouter)
 
 
-// app.use  使用模块
-// app.get   app.post 分别开发get和 post接口
-// res.send  返回文本   res.json  返回对象   res.sendfile 返回文件  / 分别用来响应不同内容
-
-
+// app.listen(9000,()=>{
+//     console.log('Node app listen 9000')
+// })  
+server.listen(9000,()=>{
+    console.log('Node app listen 9000')
+}) 
