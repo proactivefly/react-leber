@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-boss
----
-> `React`全家桶+`express`+`sock.io`+`mongodb`开发招聘应用
 
-技术栈
----
 
+---
+`React`全家桶+`express`+`sock.io`+`mongodb`开发招聘应用
+技术栈（个人练习react项目,请勿用于商业目的）
+---
 - `React16`
 - `redux` 管理状态
 - `react-router4` 路由
