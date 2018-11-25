@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {user} from './user';
+import {user} from './redux/user.js';
 import {chatuser} from './chatUser';
 import {chat} from './chat';
 

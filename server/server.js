@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.use('/user',userRouter)
+app.use('/user',userRouter) //开启中间件
 
 
 // app.listen(9000,()=>{

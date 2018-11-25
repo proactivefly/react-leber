@@ -3,15 +3,14 @@ import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import { loadData } from '@/actions'
 import { connect } from 'react-redux'
-
-@withRouter
+@withRouter //把不是路由组件的组件变成路由组件
 @connect(
 	null,
 	{loadData}
 )
 class AuthRoute extends React.Component{
 	componentDidMount() {
-		const publicList = ['/login','/register']
+		const publicList = ['/login','/register'] //白名单，不需要登录
 		const pathname = this.props.location.pathname
 		if (publicList.indexOf(pathname)>-1) {
 			return null
@@ -20,8 +19,7 @@ class AuthRoute extends React.Component{
 		axios.get('/user/info')
 			.then(res=>{
 				if (res.status==200) {
-					if (res.data.code===0) {
-						// 有登录信息的
+					if (res.data.code===0) { // 登录了
 						this.props.loadData(res.data.data)
 					}else{
 						this.props.history.push('/login')

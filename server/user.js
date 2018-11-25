@@ -14,9 +14,7 @@ const _filter = {'pwd':0,'__v':0}
 Router.get('/list',(req,res)=>{
 	// User.remove({},(e,d)=>{}) 清除用户信息
 	const {type} = req.query
-    User.find({type},(err,doc)=>{
-        return res.json({code:0,data:doc})
-    })
+  return res.json({code:0,data:doc})
 })
 Router.get('/getmsglist',function(req,res){
 	// 从cookie中获取所有的用户信息

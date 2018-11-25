@@ -7,7 +7,10 @@ export const errorMsg = (msg)=>{
 
 const authSuccess = (obj) =>{
     const {pwd,...data} = obj
-    return {type:ActionTypes.AUTH_SUCCESS,payload:data}
+    return {
+        type:ActionTypes.AUTH_SUCCESS,
+        payload:data
+    }
 }
 export const register =  ({user,pwd,repeatpwd,type}) => async (dispatch,getState)=>{
 
@@ -47,9 +50,6 @@ export const  login = ({user,pwd}) => async (dispatch,getState)=>{
     }
 }
 
-const loadDataSuccess = (data) =>{
-    return {type:ActionTypes.LOADDATA_SUCCESS,payload:data}
-}
 export const loadData = ()=>async (dispatch,getState) =>{
     try{
         const res = await axios.get('/user/info')
@@ -61,6 +61,10 @@ export const loadData = ()=>async (dispatch,getState) =>{
     } catch(ex) {
         console.log(ex)
     }
+}
+
+const loadDataSuccess = (data) =>{
+    return {type:ActionTypes.LOADDATA_SUCCESS,payload:data}
 }
 
 

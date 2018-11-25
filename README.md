@@ -191,6 +191,3 @@ git clone -b [分支名] https://github.com/poetries/boss.git
 
       第三个窗口用于启动项目
       npm run start
-
-
->>>>>>> 6cfb8ff4887f5a1fd76ac8b6dbf8390da83b4531

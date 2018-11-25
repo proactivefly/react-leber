@@ -3,13 +3,11 @@ import {Redirect} from 'react-router-dom';
 import Logo from '../../components/Logo';
 import { List, InputItem, WingBlank, WhiteSpace,Button,Radio } from 'antd-mobile';
 import {connect} from 'react-redux';
-import {register} from '../../actions'
+import {register} from '../../reudx/user.redux.js'
 
 @connect(
     state=>state.user,
-    {
-        register
-    }
+    { register}
 )
 export default class Register extends Component {
   constructor(props) {
