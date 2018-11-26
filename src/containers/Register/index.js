@@ -7,7 +7,7 @@ import {register} from '../../reudx/user.redux.js'
 
 @connect(
     state=>state.user,
-    { register}
+    { register }
 )
 export default class Register extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Register extends Component {
       })
   }
   handleRegister(){
-      this.props.register(this.state)
+      this.props.register(this.state) //执行redux函数 传入payload
   }
   render() {
     const RadioItem = Radio.RadioItem;

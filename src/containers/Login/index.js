@@ -35,6 +35,7 @@ class Login extends Component {
   render() {
     return (
       <div>
+        {/*判断登陆后去哪*/}
         {this.props.redirectTo?<Redirect to={this.props.redirectTo} />:null}
         <Logo />
         <h2>登录页面</h2>
