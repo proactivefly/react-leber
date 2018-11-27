@@ -5,7 +5,7 @@ import { getRedirectTo } from '../util/index.js'
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'; //注册成功
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; //登陆成功
 const ERROR_MSG = 'ERROR_MSG'; //错误信息
-const USER_INFO = 'USER_INFO'; //获取 用户信息
+const GET_USER_INFO = 'GET_USER_INFO'; //获取 用户信息
 const LOGOUT = 'LOGOUT'; //登出
 //state----------------------------------------------------------------------------------------------------------------
 const initState = { // 初始信息
@@ -59,6 +59,12 @@ function loginSuccess(data){ //登陆成功
     }
 }
 
+export function fetchUserInfo(data){ //获取用户信息
+    return{
+        type:GET_USER_INFO,
+        payload:data
+    }
+}
 
 export function register({ user, pwd, repeatpwd, type }) { //注册async action
     if (!user || !pwd || !type) {
@@ -95,54 +101,15 @@ export const login = ({ user, pwd }) => async (dispatch, getState) => { //登录
     }
 }
 
-export function userInfo(){
-    return dispatch =>{
-        // 获取用户信息
-        axios.get('/user/info')
-            .then(res=>{
-                if (res.status==200) {
-                    if (res.data.code===0) { // 登录了
-                        this.props.loadData(res.data.data)
-                    }else{
-                        this.props.history.push('/login')
-                    }
-                }
-            })
-        // 是否登录
-        // 现在的url地址  login是不需要跳转的
-
-        // 用户的type 身份是boss还是牛人
-        // 用户是否完善信息（选择头像 个人简介）
-    }
-}
-
-export const loadData = () => async (dispatch, getState) => {
+export const getUserInfo = () => async (dispatch, getState) => { //获取用户信息 async
     try {
         const res = await axios.get('/user/info')
         if (res.status === 200 && res.data.code == 0) {
-            dispatch(loadDataSuccess(res.data.data))
+            dispatch(fetchUserInfo(res.data.data))
         } else {
             dispatch(errorMsg(res.data.msg));
         }
     } catch (ex) {
         console.log(ex)
     }
-}
-
-
-export const update = (data) => async (dispatch, getState) => {
-    try {
-        const res = await axios.post('/user/update', data)
-        if (res.status === 200 && res.data.code == 0) {
-            dispatch(REGISTER_SUCCESS(res.data.data))
-        } else {
-            dispatch(errorMsg(res.data.msg));
-        }
-    } catch (ex) {
-        console.log(ex)
-    }
-}
-
-export function logoutSubmit(){
-    return { type: LOGOUT }
 }

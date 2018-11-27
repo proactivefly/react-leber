@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import { loadData } from '@/actions'
+import { getUserInfo } from '@/reudx/user.redux.js'
 import { connect } from 'react-redux'
 @withRouter //把不是路由组件的组件变成路由组件
 @connect(
 	null,
-	{loadData}
+	{getUserInfo}
 )
 class AuthRoute extends React.Component{
 	componentDidMount() {
@@ -20,7 +20,7 @@ class AuthRoute extends React.Component{
 			.then(res=>{
 				if (res.status==200) {
 					if (res.data.code===0) { // 登录了
-						this.props.loadData(res.data.data)
+						this.props.getUserInfo(res.data.data)
 					}else{
 						this.props.history.push('/login')
 					}
