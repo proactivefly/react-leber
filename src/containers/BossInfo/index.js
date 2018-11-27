@@ -37,34 +37,30 @@ export default class BossInfo extends Component {
       <div>
           {redirectTo&&redirectTo!==pathname?<Redirect to={redirectTo} />:null}
           <NavBar mode="dark" >BOSS信息完善</NavBar>
+
           <WhiteSpace />
-          <AvatarSelector 
-            selectAvatar={(imgname)=>{this.setState({avatar:imgname})}}
-          />
-           <WhiteSpace />
-          <InputItem
-            onChange={v=>this.handleChange('title',v)}
-          >招聘职位</InputItem>
+
+          <AvatarSelector selectAvatar={(imgname)=>{this.setState({avatar:imgname})}}/>
+
           <WhiteSpace />
-          <InputItem
-            onChange={v=>this.handleChange('company',v)}
-          >公司名称</InputItem>
+
+          <InputItem onChange={v=>this.handleChange('title',v)}>招聘职位</InputItem>
+
           <WhiteSpace />
-          <InputItem
-            onChange={v=>this.handleChange('money',v)}
-          >职位薪资</InputItem>
+
+          <InputItem onChange={v=>this.handleChange('company',v)}>公司名称</InputItem>
+
           <WhiteSpace />
-          <TextareaItem
-            title="职位描述"
-            placeholder="职位信息"
-            rows={3}
-            onChange={v=>this.handleChange('desc',v)}
-            autoHeight
-          />
+
+          <InputItem onChange={v=>this.handleChange('money',v)}>职位薪资</InputItem>
+
           <WhiteSpace />
-          <Button type='primary'
-            onClick={()=>this.props.update(this.state)}
-          >保存</Button>
+
+          <TextareaItem title="职位描述" placeholder="职位信息" rows={3} onChange={v=>this.handleChange('desc',v)} autoHeight/>
+
+          <WhiteSpace />
+          
+          <Button type='primary' onClick={()=>this.props.update(this.state)}>保存</Button>
       </div>
     )
   }

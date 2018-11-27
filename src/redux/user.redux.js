@@ -2,14 +2,12 @@ import axios from 'axios';
 import { getRedirectTo } from '../util/index.js'
 
 // const action type常量-----------------------------------------------------------------------------------------------
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'; //注册成功
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'; //登陆成功
+const AUTH_SUCCESS='AUTH_SUCCESS' //认证成功
 const ERROR_MSG = 'ERROR_MSG'; //错误信息
 const GET_USER_INFO = 'GET_USER_INFO'; //获取 用户信息
 const LOGOUT = 'LOGOUT'; //登出
 //state----------------------------------------------------------------------------------------------------------------
 const initState = { // 初始信息
-    isAuth: false, //是否登录
     redirectTo: '', //用户登录后跳转信息
     user: '',
     type: '', //用户类型
@@ -18,10 +16,8 @@ const initState = { // 初始信息
 //reducer（reducer 是返回新的state）-----------------------------------------------------------------------------------
 export function user(state = initState, action) { //es6 给参数附初始值,action 型如{type:xxx,data:xxx}
     switch (action.type) {
-        case REGISTER_SUCCESS:
-            return { ...state, msg: '',redirectTo:getRedirectTo(action.payload), isAuth: true, ...action.payload}
-        case LOGIN_SUCCESS:
-            return { ...state, msg: '',redirectTo:getRedirectTo(action.payload), isAuth: true, ...action.payload}
+        case AUTH_SUCCESS:
+            return { ...state, msg: '',redirectTo:getRedirectTo(action.payload), ...action.payload}
         case USER_INFO:
             return {...state,...action.payload}    
         case ERROR_MSG:
@@ -45,17 +41,10 @@ function errorMsg(msg) {
     return { msg, type: ERROR_MSG } //如果使用这种简写形式，msg要放前边
 }
 
-function registerSuccess(data) { //注册成功
+function authSuccess(data){ //更新，登录都调用这个
     return {
         type: REGISTER_SUCCESS,
         payload: data //不是固定的值修改项修改state，比如说用户信息这些值都不是固定的，不像isAuth这类只有 true或者false
-    }
-}
-
-function loginSuccess(data){ //登陆成功
-    return {
-        type:LOGIN_SUCCESS，
-        payload:data
     }
 }
 
@@ -76,7 +65,7 @@ export function register({ user, pwd, repeatpwd, type }) { //注册async action
     return dispathc => {
         axios.post('/user/register', { user, pwd, type }).then((res) => {
             if (res.status == 200 && res.data.code === 0) {
-                dispatch(registerSuccess({ user, pwd, type })) // { user, pwd, type }此参数相当于payload
+                dispatch(authSuccess({ user, pwd, type })) // { user, pwd, type }此参数相当于payload
             } else {
                 dispatch(errorMsg(res.data.msg));
             }
@@ -92,7 +81,7 @@ export const login = ({ user, pwd }) => async (dispatch, getState) => { //登录
     try {
         const res = await axios.post('/user/login', { user, pwd })
         if (res.status == 200 && res.data.code === 0) {
-            dispatch(loginSuccess(res.data.data))
+            dispatch(authSuccess(res.data.data))
         } else {
             dispatch(errorMsg(res.data.msg));
         }
@@ -111,5 +100,17 @@ export const getUserInfo = () => async (dispatch, getState) => { //获取用户�
         }
     } catch (ex) {
         console.log(ex)
+    }
+}
+
+export function update(data){ //更新用户详细信息
+    return dispath=>{
+        axios.post('/user/update',data).then((res)=>{
+            if (res.status == 200 && res.data.code === 0) {
+                dispatch(authSuccess(res.data.data))
+            } else {
+                dispatch(errorMsg(res.data.msg));
+            }
+        })
     }
 }
